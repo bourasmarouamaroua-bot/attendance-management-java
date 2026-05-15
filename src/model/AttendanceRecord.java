@@ -1,53 +1,41 @@
 package model;
 
+import enums.AttendanceStatus;
+
 public class AttendanceRecord {
 
     private Student student;
-    private String date;
-    private boolean present;
-    private boolean justified;
+    private Session session;
+    private AttendanceStatus status;
 
-    public AttendanceRecord(Student student,
-                            String date,
-                            boolean present,
-                            boolean justified) {
-
+    public AttendanceRecord(Student student, Session session, AttendanceStatus status) {
         this.student = student;
-        this.date = date;
-        this.present = present;
-        this.justified = justified;
+        this.session = session;
+        this.status = status;
     }
 
     public Student getStudent() {
         return student;
     }
 
-    public String getDate() {
-        return date;
+    public Session getSession() {
+        return session;
     }
 
-    public boolean isPresent() {
-        return present;
+    public AttendanceStatus getStatus() {
+        return status;
     }
 
-    public boolean isJustified() {
-        return justified;
-    }
-
-    public void setPresent(boolean present) {
-        this.present = present;
-    }
-
-    public void setJustified(boolean justified) {
-        this.justified = justified;
+    public void setStatus(AttendanceStatus status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-
         return student.getName()
-                + " | Date: " + date
-                + " | Present: " + present
-                + " | Justified: " + justified;
+                + " | "
+                + session.toString()
+                + " | Status: "
+                + status;
     }
 }
