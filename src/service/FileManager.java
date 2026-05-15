@@ -89,4 +89,43 @@ public class FileManager implements Storable {
             System.out.println("Error loading attendance: " + e.getMessage());
         }
     }
+    public void exportStudentsToTextFile() {
+
+        try {
+
+            java.io.PrintWriter writer =
+                    new java.io.PrintWriter("students.txt");
+
+            for (Student student : students) {
+
+                writer.println(
+                        "ID: " + student.getId()
+                );
+
+                writer.println(
+                        "Name: " + student.getName()
+                );
+
+                writer.println(
+                        "Username: " + student.getUsername()
+                );
+
+                writer.println(
+                        "Group: " + student.getGroup()
+                );
+
+                writer.println("-------------------");
+            }
+
+            writer.close();
+
+            System.out.println(
+                    "Students exported to students.txt"
+            );
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+        }
+    }
 }

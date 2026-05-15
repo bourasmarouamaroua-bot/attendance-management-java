@@ -15,21 +15,16 @@ public class AttendanceManager {
     private ArrayList<Session> sessions;
 
     public AttendanceManager() {
-
         students = new ArrayList<>();
         records = new ArrayList<>();
         sessions = new ArrayList<>();
     }
 
-    public void addStudent(Student student)
-            throws DuplicateStudentException {
+    public void addStudent(Student student) throws DuplicateStudentException {
 
         if (findStudentById(student.getId()) != null) {
-
             throw new DuplicateStudentException(
-                    "Student with ID "
-                            + student.getId()
-                            + " already exists."
+                    "Student with ID " + student.getId() + " already exists."
             );
         }
 
@@ -37,39 +32,31 @@ public class AttendanceManager {
     }
 
     public void addSession(Session session) {
-
         sessions.add(session);
     }
 
     public void recordAttendance(AttendanceRecord record) {
-
         records.add(record);
     }
 
     public ArrayList<Student> getStudents() {
-
         return students;
     }
 
     public ArrayList<AttendanceRecord> getRecords() {
-
         return records;
     }
 
     public ArrayList<Session> getSessions() {
-
         return sessions;
     }
 
     public int countUnjustifiedAbsences(Student student) {
-
         int count = 0;
 
         for (AttendanceRecord record : records) {
-
             if (record.getStudent().equals(student)
                     && record.getStatus() == AttendanceStatus.ABSENT) {
-
                 count++;
             }
         }
@@ -78,14 +65,11 @@ public class AttendanceManager {
     }
 
     public int countJustifiedAbsences(Student student) {
-
         int count = 0;
 
         for (AttendanceRecord record : records) {
-
             if (record.getStudent().equals(student)
                     && record.getStatus() == AttendanceStatus.JUSTIFIED) {
-
                 count++;
             }
         }
@@ -94,23 +78,15 @@ public class AttendanceManager {
     }
 
     public boolean isExcluded(Student student) {
+        int unjustified = countUnjustifiedAbsences(student);
+        int justified = countJustifiedAbsences(student);
 
-        int unjustified =
-                countUnjustifiedAbsences(student);
-
-        int justified =
-                countJustifiedAbsences(student);
-
-        return unjustified >= 3
-                || justified >= 5;
+        return unjustified >= 3 || justified >= 5;
     }
 
     public Student findStudentById(int id) {
-
         for (Student student : students) {
-
             if (student.getId() == id) {
-
                 return student;
             }
         }
@@ -118,15 +94,33 @@ public class AttendanceManager {
         return null;
     }
 
-    public ArrayList<Student> getExcludedStudents() {
+    public Student findStudentByUsername(String username) {
+        for (Student student : students) {
+            if (student.getUsername().equalsIgnoreCase(username)) {
+                return student;
+            }
+        }
 
-        ArrayList<Student> excludedStudents =
-                new ArrayList<>();
+        return null;
+    }
+
+    public ArrayList<Student> getStudentsByGroup(String groupName) {
+        ArrayList<Student> result = new ArrayList<>();
 
         for (Student student : students) {
+            if (student.getGroup().equalsIgnoreCase(groupName)) {
+                result.add(student);
+            }
+        }
 
+        return result;
+    }
+
+    public ArrayList<Student> getExcludedStudents() {
+        ArrayList<Student> excludedStudents = new ArrayList<>();
+
+        for (Student student : students) {
             if (isExcluded(student)) {
-
                 excludedStudents.add(student);
             }
         }
