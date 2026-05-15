@@ -2,7 +2,7 @@ package model;
 
 import enums.AttendanceStatus;
 
-public class AttendanceRecord {
+public class AttendanceRecord implements java.io.Serializable {
 
     private Student student;
     private Session session;

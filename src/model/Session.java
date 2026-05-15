@@ -1,6 +1,6 @@
 package model;
 
-public class Session {
+public class Session implements java.io.Serializable {
 
     private int sessionId;
     private String date;

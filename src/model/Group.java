@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-public class Group {
+public class Group implements java.io.Serializable {
 
     private int groupId;
     private String groupName;

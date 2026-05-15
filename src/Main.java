@@ -7,6 +7,7 @@ import model.Student;
 import model.Teacher;
 
 import service.AttendanceManager;
+import service.FileManager;
 import service.ReportGenerator;
 
 public class Main {
@@ -92,6 +93,14 @@ public class Main {
                         AttendanceStatus.ABSENT
                 )
         );
+
+        FileManager fileManager =
+                new FileManager(
+                        attendanceManager.getStudents(),
+                        attendanceManager.getRecords()
+                );
+
+        fileManager.saveToFile();
 
         ReportGenerator reportGenerator =
                 new ReportGenerator(attendanceManager);
