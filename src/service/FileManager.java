@@ -1,6 +1,7 @@
 package service;
 
 import interfaces.Storable;
+
 import model.AttendanceRecord;
 import model.Student;
 
@@ -12,89 +13,130 @@ public class FileManager implements Storable {
     private ArrayList<Student> students;
     private ArrayList<AttendanceRecord> records;
 
-    public FileManager(ArrayList<Student> students,
-                       ArrayList<AttendanceRecord> records) {
+    public FileManager(
+            ArrayList<Student> students,
+            ArrayList<AttendanceRecord> records
+    ) {
+
         this.students = students;
         this.records = records;
     }
 
     @Override
     public void saveToFile() {
+
         saveStudents();
         saveAttendanceRecords();
     }
 
     @Override
     public void loadFromFile() {
+
         loadStudents();
         loadAttendanceRecords();
     }
 
     public void saveStudents() {
+
         try {
-            ObjectOutputStream output =
-                    new ObjectOutputStream(new FileOutputStream("students.dat"));
 
-            output.writeObject(students);
-            output.close();
+            ObjectOutputStream outputStream =
+                    new ObjectOutputStream(
+                            new FileOutputStream("students.dat")
+                    );
 
-            System.out.println("Students saved successfully.");
+            outputStream.writeObject(students);
 
-        } catch (IOException e) {
-            System.out.println("Error saving students: " + e.getMessage());
+            outputStream.close();
+
+            System.out.println(
+                    "Students saved successfully."
+            );
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
         }
     }
 
     public void loadStudents() {
+
         try {
-            ObjectInputStream input =
-                    new ObjectInputStream(new FileInputStream("students.dat"));
 
-            students = (ArrayList<Student>) input.readObject();
-            input.close();
+            ObjectInputStream inputStream =
+                    new ObjectInputStream(
+                            new FileInputStream("students.dat")
+                    );
 
-            System.out.println("Students loaded successfully.");
+            students =
+                    (ArrayList<Student>) inputStream.readObject();
 
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading students: " + e.getMessage());
+            inputStream.close();
+
+            System.out.println(
+                    "Students loaded successfully."
+            );
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
         }
     }
 
     public void saveAttendanceRecords() {
+
         try {
-            ObjectOutputStream output =
-                    new ObjectOutputStream(new FileOutputStream("attendance.dat"));
 
-            output.writeObject(records);
-            output.close();
+            ObjectOutputStream outputStream =
+                    new ObjectOutputStream(
+                            new FileOutputStream("attendance.dat")
+                    );
 
-            System.out.println("Attendance records saved successfully.");
+            outputStream.writeObject(records);
 
-        } catch (IOException e) {
-            System.out.println("Error saving attendance: " + e.getMessage());
+            outputStream.close();
+
+            System.out.println(
+                    "Attendance records saved successfully."
+            );
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
         }
     }
 
     public void loadAttendanceRecords() {
+
         try {
-            ObjectInputStream input =
-                    new ObjectInputStream(new FileInputStream("attendance.dat"));
 
-            records = (ArrayList<AttendanceRecord>) input.readObject();
-            input.close();
+            ObjectInputStream inputStream =
+                    new ObjectInputStream(
+                            new FileInputStream("attendance.dat")
+                    );
 
-            System.out.println("Attendance records loaded successfully.");
+            records =
+                    (ArrayList<AttendanceRecord>)
+                            inputStream.readObject();
 
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading attendance: " + e.getMessage());
+            inputStream.close();
+
+            System.out.println(
+                    "Attendance records loaded successfully."
+            );
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
         }
     }
+
     public void exportStudentsToTextFile() {
 
         try {
 
-            java.io.PrintWriter writer =
-                    new java.io.PrintWriter("students.txt");
+            PrintWriter writer =
+                    new PrintWriter("students.txt");
 
             for (Student student : students) {
 
@@ -107,20 +149,72 @@ public class FileManager implements Storable {
                 );
 
                 writer.println(
-                        "Username: " + student.getUsername()
+                        "Username: "
+                                + student.getUsername()
                 );
 
                 writer.println(
-                        "Group: " + student.getGroup()
+                        "Group: "
+                                + student.getGroup()
                 );
 
-                writer.println("-------------------");
+                writer.println(
+                        "---------------------"
+                );
             }
 
             writer.close();
 
             System.out.println(
                     "Students exported to students.txt"
+            );
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void exportAttendanceToTextFile() {
+
+        try {
+
+            PrintWriter writer =
+                    new PrintWriter("attendance.txt");
+
+            for (AttendanceRecord record : records) {
+
+                writer.println(
+                        "Student: "
+                                + record.getStudent().getName()
+                );
+
+                writer.println(
+                        "Session: "
+                                + record.getSession()
+                                .getModule()
+                                .getModuleName()
+                );
+
+                writer.println(
+                        "Date: "
+                                + record.getSession().getDate()
+                );
+
+                writer.println(
+                        "Status: "
+                                + record.getStatus()
+                );
+
+                writer.println(
+                        "---------------------"
+                );
+            }
+
+            writer.close();
+
+            System.out.println(
+                    "Attendance exported to attendance.txt"
             );
 
         } catch (Exception e) {
