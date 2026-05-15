@@ -1,12 +1,15 @@
 import enums.AttendanceStatus;
 
+import model.Admin;
 import model.AttendanceRecord;
 import model.Group;
 import model.Session;
 import model.Student;
 import model.Teacher;
+import model.User;
 
 import service.AttendanceManager;
+import service.AuthenticationService;
 import service.FileManager;
 import service.ReportGenerator;
 
@@ -16,6 +19,9 @@ public class Main {
 
         AttendanceManager attendanceManager =
                 new AttendanceManager();
+
+        AuthenticationService authenticationService =
+                new AuthenticationService();
 
         Student student1 =
                 new Student(
@@ -29,13 +35,44 @@ public class Main {
 
         Teacher teacher1 =
                 new Teacher(
-                        1,
+                        2,
                         "Ahmed",
                         "ahmed01",
                         "1234",
                         "TEACHER",
                         "OOP"
                 );
+
+        Admin admin1 =
+                new Admin(
+                        3,
+                        "Admin",
+                        "admin01",
+                        "1234",
+                        "ADMIN"
+                );
+
+        authenticationService.addUser(student1);
+        authenticationService.addUser(teacher1);
+        authenticationService.addUser(admin1);
+
+        try {
+
+            User loggedUser =
+                    authenticationService.login(
+                            "admin01",
+                            "1234"
+                    );
+
+            System.out.println(
+                    "Login successful: "
+                            + loggedUser.getName()
+            );
+
+        } catch (exceptions.InvalidLoginException e) {
+
+            System.out.println(e.getMessage());
+        }
 
         Group group1 =
                 new Group(
@@ -101,6 +138,8 @@ public class Main {
                 );
 
         fileManager.saveToFile();
+
+        fileManager.loadFromFile();
 
         ReportGenerator reportGenerator =
                 new ReportGenerator(attendanceManager);

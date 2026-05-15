@@ -1,5 +1,6 @@
 package service;
 
+import exceptions.InvalidLoginException;
 import model.User;
 
 import java.util.ArrayList;
@@ -18,7 +19,9 @@ public class AuthenticationService {
         users.add(user);
     }
 
-    public User login(String username, String password) {
+    public User login(String username,
+                      String password)
+            throws InvalidLoginException {
 
         for (User user : users) {
 
@@ -29,6 +32,8 @@ public class AuthenticationService {
             }
         }
 
-        return null;
+        throw new InvalidLoginException(
+                "Invalid username or password."
+        );
     }
 }
