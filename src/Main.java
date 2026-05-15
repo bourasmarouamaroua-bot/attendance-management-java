@@ -147,5 +147,13 @@ public class Main {
         System.out.println(
                 reportGenerator.generateStudentReport(student1)
         );
+
+        System.out.println(
+                reportGenerator.generateExcludedStudentsReport()
+        );
+
+        System.out.println(
+                reportGenerator.generateGroupReport("G1")
+        );
     }
 }
