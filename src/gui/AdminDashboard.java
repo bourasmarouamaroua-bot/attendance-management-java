@@ -29,7 +29,7 @@ public class AdminDashboard extends JFrame {
         JPanel bg = new JPanel(null);
         bg.setBackground(LamayaTheme.BG);
 
-        JLabel title = LamayaTheme.title("Admin Dashboard ♡");
+        JLabel title = LamayaTheme.title("Admin Dashboard °^°");
         title.setBounds(80, 45, 600, 55);
 
         JLabel sub = new JLabel("Monitor all students, warnings, exclusions, and full attendance sheets.");
