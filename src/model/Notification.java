@@ -52,6 +52,12 @@ public class Notification implements Serializable {
 
     @Override
     public String toString() {
-        return "[" + type + "] from " + adminName + " | " + date + "\n" + message;
+        return type
+                + " from "
+                + adminName
+                + " | "
+                + date
+                + "\n"
+                + message;
     }
 }

@@ -1,7 +1,6 @@
 package utils;
 
 import enums.AttendanceStatus;
-import enums.SessionStatus;
 import model.Admin;
 import model.AttendanceRecord;
 import model.Group;
@@ -194,6 +193,23 @@ public class MockData {
         g2.addStudent(aya);
 
         // =========================
+        // ADD STUDENTS TO MANAGER
+        // =========================
+
+        try {
+
+            attendanceManager.addStudent(sara);
+            attendanceManager.addStudent(lina);
+            attendanceManager.addStudent(amine);
+            attendanceManager.addStudent(yacine);
+            attendanceManager.addStudent(rayane);
+            attendanceManager.addStudent(aya);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        // =========================
         // MODULES
         // =========================
 
@@ -232,8 +248,8 @@ public class MockData {
         Session optic1 =
                 attendanceManager.createSession(
                         1,
-                        "18/05/2026",
-                        "08:00",
+                        "20/05/2026",
+                        "08:00 - 10:00",
                         optic,
                         g1
                 );
@@ -241,8 +257,8 @@ public class MockData {
         Session algebra1 =
                 attendanceManager.createSession(
                         2,
-                        "19/05/2026",
-                        "10:00",
+                        "20/05/2026",
+                        "10:00 - 12:00",
                         algebra,
                         g1
                 );
@@ -251,7 +267,7 @@ public class MockData {
                 attendanceManager.createSession(
                         3,
                         "20/05/2026",
-                        "09:30",
+                        "13:30 - 15:30",
                         database,
                         g2
                 );
@@ -259,8 +275,8 @@ public class MockData {
         Session is1 =
                 attendanceManager.createSession(
                         4,
-                        "21/05/2026",
-                        "13:00",
+                        "20/05/2026",
+                        "15:30 - 17:30",
                         informationSystems,
                         g2
                 );
@@ -269,28 +285,11 @@ public class MockData {
         // SESSION STATES
         // =========================
 
-        optic1.setStatus(SessionStatus.CLOSED);
-        algebra1.setStatus(SessionStatus.OPEN);
+        optic1.closeSession();
+        database1.closeSession();
 
-        database1.setStatus(SessionStatus.CLOSED);
-        is1.setStatus(SessionStatus.OPEN);
-
-        // =========================
-        // ADD STUDENTS TO MANAGER
-        // =========================
-
-        try {
-
-            attendanceManager.addStudent(sara);
-            attendanceManager.addStudent(lina);
-            attendanceManager.addStudent(amine);
-            attendanceManager.addStudent(yacine);
-            attendanceManager.addStudent(rayane);
-            attendanceManager.addStudent(aya);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        algebra1.openSession();
+        is1.openSession();
 
         // =========================
         // ATTENDANCE RECORDS
@@ -356,7 +355,7 @@ public class MockData {
                 )
         );
 
-        // Rayane -> good student
+        // Rayane
 
         attendanceManager.recordAttendance(
                 new AttendanceRecord(
@@ -426,6 +425,26 @@ public class MockData {
                         is1,
                         AttendanceStatus.PRESENT
                 )
+        );
+
+        // =========================
+        // NOTIFICATIONS
+        // =========================
+
+        attendanceManager.sendNotification(
+                sara,
+                "Boughaled",
+                "EXCLUSION",
+                "You have exceeded the maximum absence limit.",
+                "20/05/2026"
+        );
+
+        attendanceManager.sendNotification(
+                lina,
+                "Riahla",
+                "WARNING",
+                "You are close to the exclusion threshold.",
+                "20/05/2026"
         );
     }
 }

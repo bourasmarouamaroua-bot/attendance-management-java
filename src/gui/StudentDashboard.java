@@ -1,7 +1,6 @@
 package gui;
 
 import model.Student;
-import model.Teacher;
 import service.AttendanceManager;
 import service.AuthenticationService;
 
@@ -30,45 +29,37 @@ public class StudentDashboard extends JFrame {
         JPanel bg = new JPanel(null);
         bg.setBackground(LamayaTheme.BG);
 
-        JLabel title = LamayaTheme.title("Hello, " + student.getName() + " ♡");
-        title.setBounds(80, 40, 700, 55);
+        JLabel title = LamayaTheme.title("Hello, " + student.getName());
+        title.setBounds(80, 45, 700, 55);
 
-        JLabel sub = new JLabel("Choose a teacher to see your sessions and your personal report.");
+        JLabel sub = new JLabel("Check your daily sessions, module status, and inbox.");
         sub.setBounds(85, 100, 800, 30);
         sub.setFont(new Font("Arial", Font.PLAIN, 20));
         sub.setForeground(LamayaTheme.GRAY);
 
-        DefaultListModel<Teacher> listModel = new DefaultListModel<>();
+        JButton daily = LamayaTheme.button("Daily Sessions");
+        daily.setBounds(150, 220, 280, 80);
 
-        for (Teacher teacher : attendanceManager.getTeachersForStudent(student)) {
-            listModel.addElement(teacher);
-        }
+        JButton status = LamayaTheme.button("My Module Status");
+        status.setBounds(485, 220, 280, 80);
 
-        JList<Teacher> teacherList = new JList<>(listModel);
-        teacherList.setFont(new Font("Arial", Font.BOLD, 20));
-        teacherList.setFixedCellHeight(55);
-        teacherList.setBorder(BorderFactory.createLineBorder(LamayaTheme.PINK, 2));
-
-        JScrollPane scroll = new JScrollPane(teacherList);
-        scroll.setBounds(180, 170, 880, 330);
-
-        JButton open = LamayaTheme.button("Open Teacher Report");
-        open.setBounds(310, 545, 300, 60);
+        JButton inbox = LamayaTheme.button("Inbox");
+        inbox.setBounds(820, 220, 280, 80);
 
         JButton logout = LamayaTheme.button("Logout");
-        logout.setBounds(660, 545, 250, 60);
+        logout.setBounds(500, 560, 260, 60);
 
-        open.addActionListener(e -> {
+        daily.addActionListener(e ->
+                new StudentDailySessionsPage(student, attendanceManager)
+        );
 
-            Teacher selectedTeacher = teacherList.getSelectedValue();
+        status.addActionListener(e ->
+                new StudentStatusPage(student, attendanceManager)
+        );
 
-            if (selectedTeacher == null) {
-                JOptionPane.showMessageDialog(this, "Select a teacher first.");
-                return;
-            }
-
-            new StudentTeacherReportPage(student, selectedTeacher, attendanceManager);
-        });
+        inbox.addActionListener(e ->
+                new StudentInboxPage(student, attendanceManager)
+        );
 
         logout.addActionListener(e -> {
             new LoginPage(attendanceManager, authService);
@@ -77,8 +68,9 @@ public class StudentDashboard extends JFrame {
 
         bg.add(title);
         bg.add(sub);
-        bg.add(scroll);
-        bg.add(open);
+        bg.add(daily);
+        bg.add(status);
+        bg.add(inbox);
         bg.add(logout);
 
         add(bg);

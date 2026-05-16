@@ -1,8 +1,9 @@
 package model;
 
 import enums.SessionStatus;
+import java.io.Serializable;
 
-public class Session implements java.io.Serializable {
+public class Session implements Serializable {
 
     private int sessionId;
     private String date;
@@ -23,7 +24,7 @@ public class Session implements java.io.Serializable {
         this.time = time;
         this.module = module;
         this.group = group;
-        this.status = SessionStatus.CLOSED;
+        this.status = SessionStatus.OPEN;
         this.locked = false;
     }
 
@@ -67,14 +68,6 @@ public class Session implements java.io.Serializable {
         }
     }
 
-    public void setStatus(SessionStatus status) {
-        this.status = status;
-
-        if (status == SessionStatus.CLOSED) {
-            this.locked = true;
-        }
-    }
-
     public void openSession() {
         if (!locked) {
             this.status = SessionStatus.OPEN;
@@ -92,12 +85,14 @@ public class Session implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "Session " + sessionId
-                + " | " + module.getModuleName()
-                + " | Teacher: " + module.getTeacher().getName()
-                + " | Group: " + group.getGroupName()
-                + " | " + date
-                + " " + time
-                + " | " + status;
+        return module.getModuleName()
+                + " | "
+                + group.getGroupName()
+                + " | "
+                + date
+                + " | "
+                + time
+                + " | "
+                + status;
     }
 }
