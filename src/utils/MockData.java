@@ -1,14 +1,14 @@
 package utils;
 
 import enums.AttendanceStatus;
-
+import enums.SessionStatus;
 import model.Admin;
 import model.AttendanceRecord;
 import model.Group;
+import model.Module;
 import model.Session;
 import model.Student;
 import model.Teacher;
-
 import service.AttendanceManager;
 import service.AuthenticationService;
 
@@ -19,204 +19,289 @@ public class MockData {
             AuthenticationService authenticationService
     ) {
 
+        // =========================
+        // STUDENTS
+        // =========================
+
         Student sara =
-                new Student(1, "Sara",
+                new Student(
+                        1,
+                        "Sara",
                         "sara01",
                         "1234",
                         "STUDENT",
-                        "G1");
+                        "G1"
+                );
 
         Student lina =
-                new Student(2, "Lina",
+                new Student(
+                        2,
+                        "Lina",
                         "lina01",
                         "1234",
                         "STUDENT",
-                        "G1");
-
-        Student yacine =
-                new Student(3, "Yacine",
-                        "yacine01",
-                        "1234",
-                        "STUDENT",
-                        "G2");
+                        "G1"
+                );
 
         Student amine =
-                new Student(4, "Amine",
+                new Student(
+                        3,
+                        "Amine",
                         "amine01",
                         "1234",
                         "STUDENT",
-                        "G2");
+                        "G2"
+                );
 
-        Student lylia =
-                new Student(5,
-                        "Lylia Boubchir",
-                        "lylia01",
+        Student yacine =
+                new Student(
+                        4,
+                        "Yacine",
+                        "yacine01",
                         "1234",
                         "STUDENT",
-                        "G1");
-
-        Student maroua =
-                new Student(6,
-                        "Maroua Bouras",
-                        "maroua01",
-                        "1234",
-                        "STUDENT",
-                        "G1");
-
-        Student wissal =
-                new Student(7,
-                        "Wissal Bouras",
-                        "wissal01",
-                        "1234",
-                        "STUDENT",
-                        "G1");
-
-        Student aya =
-                new Student(8,
-                        "Aya Lillia Bourzak",
-                        "aya01",
-                        "1234",
-                        "STUDENT",
-                        "G2");
+                        "G2"
+                );
 
         Student rayane =
-                new Student(9,
-                        "Rayane Bouazouni",
+                new Student(
+                        5,
+                        "Rayane",
                         "rayane01",
                         "1234",
                         "STUDENT",
-                        "G2");
+                        "G1"
+                );
 
-        Student daline =
-                new Student(10,
-                        "Daline Boubchir",
-                        "daline01",
+        Student aya =
+                new Student(
+                        6,
+                        "Aya",
+                        "aya01",
                         "1234",
                         "STUDENT",
-                        "G2");
+                        "G2"
+                );
 
-        Student houria =
-                new Student(11,
-                        "Houria Mounira Nacib",
-                        "houria01",
-                        "1234",
-                        "STUDENT",
-                        "G2");
+        // =========================
+        // TEACHERS
+        // =========================
 
-        Teacher ahmed =
-                new Teacher(12,
-                        "Ahmed",
-                        "ahmed01",
-                        "1234",
+        Teacher bouchachi =
+                new Teacher(
+                        10,
+                        "Bouchachi",
+                        "bouchachi",
+                        "b2026",
                         "TEACHER",
-                        "OOP");
+                        "Optic"
+                );
 
-        Teacher samir =
-                new Teacher(13,
-                        "Samir",
-                        "samir01",
-                        "1234",
+        Teacher mekki =
+                new Teacher(
+                        11,
+                        "Mekki",
+                        "mekki",
+                        "m2026",
                         "TEACHER",
-                        "Database");
+                        "Algebra"
+                );
 
-        Admin admin =
-                new Admin(14,
-                        "Admin",
-                        "admin01",
-                        "1234",
-                        "ADMIN");
+        Teacher nait =
+                new Teacher(
+                        12,
+                        "Nait",
+                        "nait",
+                        "n2026",
+                        "TEACHER",
+                        "Database"
+                );
+
+        Teacher houadjeli =
+                new Teacher(
+                        13,
+                        "Houadjeli",
+                        "houadjeli",
+                        "h2026",
+                        "TEACHER",
+                        "Information Systems"
+                );
+
+        // =========================
+        // ADMINS
+        // =========================
+
+        Admin boughaled =
+                new Admin(
+                        20,
+                        "Boughaled",
+                        "boughaled",
+                        "incub2026",
+                        "ADMIN"
+                );
+
+        Admin riahla =
+                new Admin(
+                        21,
+                        "Riahla",
+                        "riahla",
+                        "nscs2026",
+                        "ADMIN"
+                );
+
+        Admin iddir =
+                new Admin(
+                        22,
+                        "Iddir",
+                        "iddir",
+                        "nscs2026",
+                        "ADMIN"
+                );
+
+        // =========================
+        // AUTH USERS
+        // =========================
 
         authenticationService.addUser(sara);
         authenticationService.addUser(lina);
-        authenticationService.addUser(yacine);
         authenticationService.addUser(amine);
-
-        authenticationService.addUser(lylia);
-        authenticationService.addUser(maroua);
-        authenticationService.addUser(wissal);
-        authenticationService.addUser(aya);
+        authenticationService.addUser(yacine);
         authenticationService.addUser(rayane);
-        authenticationService.addUser(daline);
-        authenticationService.addUser(houria);
+        authenticationService.addUser(aya);
 
-        authenticationService.addUser(ahmed);
-        authenticationService.addUser(samir);
-        authenticationService.addUser(admin);
+        authenticationService.addUser(bouchachi);
+        authenticationService.addUser(mekki);
+        authenticationService.addUser(nait);
+        authenticationService.addUser(houadjeli);
 
-        Group group1 =
-                new Group(1, "G1");
+        authenticationService.addUser(boughaled);
+        authenticationService.addUser(riahla);
+        authenticationService.addUser(iddir);
 
-        Group group2 =
-                new Group(2, "G2");
+        // =========================
+        // GROUPS
+        // =========================
 
-        group1.addStudent(sara);
-        group1.addStudent(lina);
-        group1.addStudent(lylia);
-        group1.addStudent(maroua);
-        group1.addStudent(wissal);
+        Group g1 = new Group(1, "G1");
+        Group g2 = new Group(2, "G2");
 
-        group2.addStudent(yacine);
-        group2.addStudent(amine);
-        group2.addStudent(aya);
-        group2.addStudent(rayane);
-        group2.addStudent(daline);
-        group2.addStudent(houria);
+        g1.addStudent(sara);
+        g1.addStudent(lina);
+        g1.addStudent(rayane);
 
-        model.Module oop =
-                new model.Module(1,
-                        "OOP",
-                        ahmed);
+        g2.addStudent(amine);
+        g2.addStudent(yacine);
+        g2.addStudent(aya);
 
-        model.Module database =
-                new model.Module(2,
-                        "Database",
-                        samir);
+        // =========================
+        // MODULES
+        // =========================
 
-        Session oopSession =
-                new Session(
+        Module optic =
+                new Module(
                         1,
-                        "15/05/2026",
-                        "08:00",
-                        oop,
-                        group1
+                        "Optic",
+                        bouchachi
                 );
 
-        Session dbSession =
-                new Session(
+        Module algebra =
+                new Module(
                         2,
-                        "16/05/2026",
-                        "10:00",
-                        database,
-                        group2
+                        "Algebra",
+                        mekki
                 );
+
+        Module database =
+                new Module(
+                        3,
+                        "Database",
+                        nait
+                );
+
+        Module informationSystems =
+                new Module(
+                        4,
+                        "Information Systems",
+                        houadjeli
+                );
+
+        // =========================
+        // SESSIONS
+        // =========================
+
+        Session optic1 =
+                attendanceManager.createSession(
+                        1,
+                        "18/05/2026",
+                        "08:00",
+                        optic,
+                        g1
+                );
+
+        Session algebra1 =
+                attendanceManager.createSession(
+                        2,
+                        "19/05/2026",
+                        "10:00",
+                        algebra,
+                        g1
+                );
+
+        Session database1 =
+                attendanceManager.createSession(
+                        3,
+                        "20/05/2026",
+                        "09:30",
+                        database,
+                        g2
+                );
+
+        Session is1 =
+                attendanceManager.createSession(
+                        4,
+                        "21/05/2026",
+                        "13:00",
+                        informationSystems,
+                        g2
+                );
+
+        // =========================
+        // SESSION STATES
+        // =========================
+
+        optic1.setStatus(SessionStatus.CLOSED);
+        algebra1.setStatus(SessionStatus.OPEN);
+
+        database1.setStatus(SessionStatus.CLOSED);
+        is1.setStatus(SessionStatus.OPEN);
+
+        // =========================
+        // ADD STUDENTS TO MANAGER
+        // =========================
 
         try {
 
             attendanceManager.addStudent(sara);
             attendanceManager.addStudent(lina);
-            attendanceManager.addStudent(yacine);
             attendanceManager.addStudent(amine);
-
-            attendanceManager.addStudent(lylia);
-            attendanceManager.addStudent(maroua);
-            attendanceManager.addStudent(wissal);
-            attendanceManager.addStudent(aya);
+            attendanceManager.addStudent(yacine);
             attendanceManager.addStudent(rayane);
-            attendanceManager.addStudent(daline);
-            attendanceManager.addStudent(houria);
+            attendanceManager.addStudent(aya);
 
-        } catch (exceptions.DuplicateStudentException e) {
-
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        attendanceManager.addSession(oopSession);
-        attendanceManager.addSession(dbSession);
+        // =========================
+        // ATTENDANCE RECORDS
+        // =========================
+
+        // Sara -> excluded
 
         attendanceManager.recordAttendance(
                 new AttendanceRecord(
                         sara,
-                        oopSession,
+                        optic1,
                         AttendanceStatus.ABSENT
                 )
         );
@@ -224,7 +309,7 @@ public class MockData {
         attendanceManager.recordAttendance(
                 new AttendanceRecord(
                         sara,
-                        oopSession,
+                        algebra1,
                         AttendanceStatus.ABSENT
                 )
         );
@@ -232,23 +317,69 @@ public class MockData {
         attendanceManager.recordAttendance(
                 new AttendanceRecord(
                         sara,
-                        oopSession,
+                        algebra1,
                         AttendanceStatus.ABSENT
                 )
         );
+
+        // Lina -> warning
 
         attendanceManager.recordAttendance(
                 new AttendanceRecord(
                         lina,
-                        oopSession,
+                        optic1,
                         AttendanceStatus.JUSTIFIED
                 )
         );
 
         attendanceManager.recordAttendance(
                 new AttendanceRecord(
-                        yacine,
-                        dbSession,
+                        lina,
+                        algebra1,
+                        AttendanceStatus.JUSTIFIED
+                )
+        );
+
+        attendanceManager.recordAttendance(
+                new AttendanceRecord(
+                        lina,
+                        algebra1,
+                        AttendanceStatus.JUSTIFIED
+                )
+        );
+
+        attendanceManager.recordAttendance(
+                new AttendanceRecord(
+                        lina,
+                        algebra1,
+                        AttendanceStatus.JUSTIFIED
+                )
+        );
+
+        // Rayane -> good student
+
+        attendanceManager.recordAttendance(
+                new AttendanceRecord(
+                        rayane,
+                        optic1,
+                        AttendanceStatus.PRESENT
+                )
+        );
+
+        attendanceManager.recordAttendance(
+                new AttendanceRecord(
+                        rayane,
+                        algebra1,
+                        AttendanceStatus.LATE
+                )
+        );
+
+        // Amine
+
+        attendanceManager.recordAttendance(
+                new AttendanceRecord(
+                        amine,
+                        database1,
                         AttendanceStatus.PRESENT
                 )
         );
@@ -256,16 +387,44 @@ public class MockData {
         attendanceManager.recordAttendance(
                 new AttendanceRecord(
                         amine,
-                        dbSession,
+                        is1,
                         AttendanceStatus.ABSENT
+                )
+        );
+
+        // Yacine
+
+        attendanceManager.recordAttendance(
+                new AttendanceRecord(
+                        yacine,
+                        database1,
+                        AttendanceStatus.LATE
                 )
         );
 
         attendanceManager.recordAttendance(
                 new AttendanceRecord(
-                        amine,
-                        dbSession,
-                        AttendanceStatus.ABSENT
+                        yacine,
+                        is1,
+                        AttendanceStatus.PRESENT
+                )
+        );
+
+        // Aya
+
+        attendanceManager.recordAttendance(
+                new AttendanceRecord(
+                        aya,
+                        database1,
+                        AttendanceStatus.JUSTIFIED
+                )
+        );
+
+        attendanceManager.recordAttendance(
+                new AttendanceRecord(
+                        aya,
+                        is1,
+                        AttendanceStatus.PRESENT
                 )
         );
     }

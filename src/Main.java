@@ -11,6 +11,7 @@ public class Main {
 
         SwingUtilities.invokeLater(() -> {
 
+
             AttendanceManager attendanceManager = new AttendanceManager();
             AuthenticationService authService = new AuthenticationService();
 
