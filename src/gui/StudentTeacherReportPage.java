@@ -2,6 +2,7 @@ package gui;
 
 import model.AttendanceRecord;
 import model.Session;
+import model.Student;
 import model.Teacher;
 import service.AttendanceManager;
 import service.FileManager;
@@ -9,26 +10,30 @@ import service.FileManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class ReportPage extends JFrame {
+public class StudentTeacherReportPage extends JFrame {
 
+    private Student student;
     private Teacher teacher;
     private AttendanceManager attendanceManager;
     private JTextArea area;
 
-    public ReportPage(Teacher teacher, AttendanceManager attendanceManager) {
+    public StudentTeacherReportPage(Student student,
+                                    Teacher teacher,
+                                    AttendanceManager attendanceManager) {
 
+        this.student = student;
         this.teacher = teacher;
         this.attendanceManager = attendanceManager;
 
-        setTitle("Teacher Report");
-        setSize(1100, 680);
+        setTitle("My Teacher Report");
+        setSize(1050, 680);
         setLocationRelativeTo(null);
 
         JPanel bg = new JPanel(null);
         bg.setBackground(LamayaTheme.BG);
 
-        JLabel title = LamayaTheme.title("Teacher Report");
-        title.setBounds(390, 30, 450, 50);
+        JLabel title = LamayaTheme.title("My Report With " + teacher.getName());
+        title.setBounds(250, 30, 650, 50);
 
         area = new JTextArea();
         area.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -36,10 +41,10 @@ public class ReportPage extends JFrame {
         area.setBorder(BorderFactory.createLineBorder(LamayaTheme.PINK, 2));
 
         JScrollPane scroll = new JScrollPane(area);
-        scroll.setBounds(100, 110, 880, 390);
+        scroll.setBounds(90, 110, 860, 400);
 
-        JButton export = LamayaTheme.button("Export report.txt");
-        export.setBounds(390, 535, 300, 60);
+        JButton export = LamayaTheme.button("Export My Report");
+        export.setBounds(365, 545, 320, 60);
 
         export.addActionListener(e -> {
             FileManager fileManager =
@@ -54,11 +59,11 @@ public class ReportPage extends JFrame {
         bg.add(export);
 
         add(bg);
-        generateReport();
+        generate();
         setVisible(true);
     }
 
-    private void generateReport() {
+    private void generate() {
 
         StringBuilder report = new StringBuilder();
 
@@ -67,46 +72,49 @@ public class ReportPage extends JFrame {
         int absent = 0;
         int justified = 0;
 
-        report.append("TEACHER REPORT\n");
+        report.append("STUDENT PERSONAL REPORT\n");
+        report.append("Student: ").append(student.getName()).append("\n");
         report.append("Teacher: ").append(teacher.getName()).append("\n\n");
 
         report.append("SESSIONS:\n");
 
-        for (Session session : attendanceManager.getSessionsByTeacher(teacher)) {
-            report.append("- ").append(session).append("\n");
-        }
+        for (Session session : attendanceManager.getSessionsForStudentByTeacher(student, teacher)) {
 
-        report.append("\nATTENDANCE RECORDS:\n");
+            String status = attendanceManager.getStudentStatusInSession(student, session);
 
-        for (AttendanceRecord record : attendanceManager.getRecords()) {
+            report.append("- ")
+                    .append(session.getDate())
+                    .append(" ")
+                    .append(session.getTime())
+                    .append(" | Module: ")
+                    .append(session.getModule().getModuleName())
+                    .append(" | Session: ")
+                    .append(session.getStatus())
+                    .append(" | My status: ")
+                    .append(status)
+                    .append("\n");
 
-            if (record.getSession().getModule().getTeacher().getUsername()
-                    .equalsIgnoreCase(teacher.getUsername())) {
+            AttendanceRecord record =
+                    attendanceManager.getStudentRecordInSession(student, session);
 
+            if (record != null) {
                 switch (record.getStatus()) {
                     case PRESENT: present++; break;
                     case LATE: late++; break;
                     case ABSENT: absent++; break;
                     case JUSTIFIED: justified++; break;
                 }
-
-                report.append("- ")
-                        .append(record.getStudent().getName())
-                        .append(" | ")
-                        .append(record.getSession().getModule().getModuleName())
-                        .append(" | ")
-                        .append(record.getSession().getDate())
-                        .append(" | ")
-                        .append(record.getStatus())
-                        .append("\n");
             }
         }
 
-        report.append("\nSTATISTICS:\n");
+        report.append("\nSUMMARY:\n");
         report.append("Present: ").append(present).append("\n");
         report.append("Late: ").append(late).append("\n");
         report.append("Absent: ").append(absent).append("\n");
         report.append("Justified: ").append(justified).append("\n");
+
+        report.append("\nAdministrative status: ")
+                .append(attendanceManager.getAdministrativeStatus(student));
 
         area.setText(report.toString());
     }
